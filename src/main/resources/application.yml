@@ -1,0 +1,16 @@
+
+server:
+  port: 8081
+
+imissyou:
+  api-package: com.lin.imissyou.api
+
+spring:
+  profiles:
+    active: dev
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: true
