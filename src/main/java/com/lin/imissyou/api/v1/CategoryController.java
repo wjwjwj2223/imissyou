@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("category")
 @Validated
 public class CategoryController {
 

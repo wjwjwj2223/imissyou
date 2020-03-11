@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotBlank;
 
 @RestController
-@RequestMapping("/banner")
+@RequestMapping("banner")
 @Validated
 public class BannerController {
 
