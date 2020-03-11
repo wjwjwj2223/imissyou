@@ -20,6 +20,7 @@ import java.util.Map;
 @Entity
 @Setter
 @Getter
+
 @Where(clause = "delete_time is null")
 public class Sku extends BaseEntity {
 

@@ -36,15 +36,15 @@ public class Spu extends BaseEntity {
     private String forThemeImg;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "spuId")
+    @JoinColumn(name="spuId")
     private List<Sku> skuList;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "spuId")
+    @JoinColumn(name="spuId")
     private List<SpuDetailImg> spuDetailImgList;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "spuId")
+    @JoinColumn(name="spuId")
     private List<SpuImg> spuImgList;
 
 }

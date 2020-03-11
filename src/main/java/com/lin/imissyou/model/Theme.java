@@ -1,13 +1,18 @@
 package com.lin.imissyou.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Where;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Setter
+@Getter
+@Where(clause = "delete_time is null")
 public class Theme {
 
     @Id
@@ -20,5 +25,10 @@ public class Theme {
     private String extend;
     private String internalTopImg;
     private String titleImg;
-    private Byte online;
+    private Boolean online;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="theme_spu", joinColumns = @JoinColumn(name="theme_id")
+            , inverseJoinColumns = @JoinColumn(name="spu_id"))
+    private List<Spu> spuList;
 }
