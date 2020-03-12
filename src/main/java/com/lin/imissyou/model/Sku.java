@@ -34,26 +34,27 @@ public class Sku extends BaseEntity {
     private Long spuId;
     private String code;
 
-//    public List<Spec> getSpecs() {
-//        if (this.specs == null) {
-//            return Collections.emptyList();
-//        }
-//        return GenericAndJson.jsonToList(this.specs);
-//    }
-//
-//    public void setSpecs(List<Spec> specs) {
-//        if (specs == null) {
-//            return;
-//        }
-//        this.specs = GenericAndJson.objectToJson(specs);
-//    }
+    public List<Spec> getSpecs() {
+        if (this.specs == null) {
+            return Collections.emptyList();
+        }
+        return GenericAndJson.jsonToObject(this.specs, new TypeReference<List<Spec>>() {
+        });
+    }
+
+    public void setSpecs(List<Spec> specs) {
+        if (specs == null) {
+            return;
+        }
+        this.specs = GenericAndJson.objectToJson(specs);
+    }
 
     private Long stock;
     private Integer categoryId;
     private Integer rootCategoryId;
 
-    @Convert(converter = SuperGenericAndJson.class)
-    private List<Spec> specs;
+//    @Convert(converter = SuperGenericAndJson.class)
+    private String specs;
 
 //    @Convert(converter = MapAndJson.class)
 //    private Map<String, Object> test;

@@ -29,12 +29,13 @@ public class GenericAndJson {
          }
      }
 
-     public static <T> T jsonToObject(String s, Class<T> tClass) {
+     public static <T> T jsonToObject(String s, TypeReference<T> tr) {
         if (s == null) {
             return null;
         }
          try {
-             return GenericAndJson.mapper.readValue(s, tClass);
+             T t = GenericAndJson.mapper.readValue(s, tr);
+             return t;
          } catch (JsonProcessingException e) {
              e.printStackTrace();
              throw  new ServerErrorException(9999);
@@ -54,16 +55,17 @@ public class GenericAndJson {
 //         }
 //     }
 
-     public static <T> T jsonToList(String s) {
-         if (s == null) {
-             return null;
-         }
-         try {
-             return GenericAndJson.mapper.readValue(s, new TypeReference<T>() {
-             });
-         } catch (JsonProcessingException e) {
-             e.printStackTrace();
-             throw  new ServerErrorException(9999);
-         }
-     }
+//     public static <T> T jsonToList(String s) {
+//         if (s == null) {
+//             return null;
+//         }
+//         try {
+//             T t = GenericAndJson.mapper.readValue(s, new TypeReference<T>() {
+//             });
+//             return t;
+//         } catch (JsonProcessingException e) {
+//             e.printStackTrace();
+//             throw  new ServerErrorException(9999);
+//         }
+//     }
 }

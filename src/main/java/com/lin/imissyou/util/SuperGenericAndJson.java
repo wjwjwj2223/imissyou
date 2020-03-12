@@ -7,6 +7,7 @@ import com.lin.imissyou.exception.ServerErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.persistence.AttributeConverter;
+import java.util.List;
 
 @Component
 public class SuperGenericAndJson <T> implements AttributeConverter<T, String> {
@@ -33,8 +34,9 @@ public class SuperGenericAndJson <T> implements AttributeConverter<T, String> {
             return null;
         }
         try {
-            return mapper.readValue(s, new TypeReference<T>() {
+            T t =  mapper.readValue(s, new TypeReference<T>() {
             });
+            return t;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new ServerErrorException(9999);
