@@ -3,11 +3,10 @@ package com.lin.imissyou.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lin.imissyou.exception.ServerErrorException;
+import com.lin.imissyou.exception.http.ServerErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.persistence.AttributeConverter;
-import java.util.List;
 
 @Component
 public class SuperGenericAndJson <T> implements AttributeConverter<T, String> {

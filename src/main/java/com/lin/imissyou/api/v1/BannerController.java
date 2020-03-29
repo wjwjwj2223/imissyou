@@ -1,7 +1,8 @@
 package com.lin.imissyou.api.v1;
 
+import com.lin.imissyou.core.interceptors.ScopeLevel;
 import com.lin.imissyou.dto.PersonDTO;
-import com.lin.imissyou.exception.NotFoundException;
+import com.lin.imissyou.exception.http.NotFoundException;
 import com.lin.imissyou.model.Banner;
 import com.lin.imissyou.services.BannerService;
 import org.hibernate.validator.constraints.Range;
@@ -21,7 +22,7 @@ public class BannerController {
     private BannerService bannerService;
 
     @GetMapping("/name/{name}")
-    @ResponseBody
+    @ScopeLevel()
     public Banner getByName(@PathVariable @NotBlank String name) {
         Banner banner = bannerService.getByName(name);
         if (banner == null) {

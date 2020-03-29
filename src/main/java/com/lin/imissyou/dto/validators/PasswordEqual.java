@@ -1,4 +1,4 @@
-package com.lin.imissyou.validators;
+package com.lin.imissyou.dto.validators;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

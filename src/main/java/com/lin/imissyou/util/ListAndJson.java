@@ -2,7 +2,7 @@ package com.lin.imissyou.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lin.imissyou.exception.ServerErrorException;
+import com.lin.imissyou.exception.http.ServerErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.AttributeConverter;

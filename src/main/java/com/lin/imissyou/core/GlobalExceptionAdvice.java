@@ -1,7 +1,7 @@
 package com.lin.imissyou.core;
 
 import com.lin.imissyou.core.configuration.ExceptionCodeConfiguration;
-import com.lin.imissyou.exception.HttpException;
+import com.lin.imissyou.exception.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

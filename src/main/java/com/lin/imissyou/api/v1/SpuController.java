@@ -1,7 +1,7 @@
 package com.lin.imissyou.api.v1;
 
 import com.lin.imissyou.bo.PageCounter;
-import com.lin.imissyou.exception.NotFoundException;
+import com.lin.imissyou.exception.http.NotFoundException;
 import com.lin.imissyou.model.Spu;
 import com.lin.imissyou.services.SpuService;
 import com.lin.imissyou.util.CommonUtil;

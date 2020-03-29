@@ -1,4 +1,4 @@
-package com.lin.imissyou.exception;
+package com.lin.imissyou.exception.http;
 
 import lombok.Getter;
 
