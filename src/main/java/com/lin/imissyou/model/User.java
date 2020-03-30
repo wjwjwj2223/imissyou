@@ -6,6 +6,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ public class User extends BaseEntity {
     private String mobile;
 
     private Integer unifyUid;
-//    private String group;
+//    private String group;ActivityController
 
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "UserCoupon",
