@@ -6,13 +6,16 @@ import com.lin.imissyou.core.enumeration.CouponStatus;
 import com.lin.imissyou.core.interceptors.ScopeLevel;
 import com.lin.imissyou.exception.http.ParameterException;
 import com.lin.imissyou.model.Coupon;
+import com.lin.imissyou.model.User;
 import com.lin.imissyou.services.CouponService;
+import com.lin.imissyou.vo.CouponCategoryVO;
 import com.lin.imissyou.vo.CouponPureVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("coupon")
 @RestController
@@ -69,6 +72,20 @@ public class CouponController {
         return CouponPureVO.getList(couponList);
     }
 
+
+    @ScopeLevel()
+    @GetMapping("/myself/available/with_category")
+    public List<CouponCategoryVO> getUserCouponWithCategory() {
+        User user = LocalUser.getUser();
+        List<Coupon> coupons = couponService.getMyAvailableCoupons(user.getId());
+        if (coupons.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return coupons.stream().map(coupon -> {
+            CouponCategoryVO vo = new CouponCategoryVO(coupon);
+            return vo;
+        }).collect(Collectors.toList());
+    }
 
 
 }
