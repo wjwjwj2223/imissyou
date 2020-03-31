@@ -16,7 +16,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCoupon {
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private int id;
@@ -25,5 +24,4 @@ public class UserCoupon {
     private Long orderId;
     private Integer status;
     private Date createTime;
-
 }

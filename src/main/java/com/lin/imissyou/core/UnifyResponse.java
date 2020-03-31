@@ -3,6 +3,7 @@ package com.lin.imissyou.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.lin.imissyou.exception.CreateSuccess;
 import lombok.Data;
 import lombok.Getter;
 
@@ -25,5 +26,9 @@ public class UnifyResponse<T> {
         this.message = message;
         this.request = request;
         this.data = data;
+    }
+
+    public static void createSuccess(int code) {
+        throw new CreateSuccess(code);
     }
 }

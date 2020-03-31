@@ -1,13 +1,13 @@
 package com.lin.imissyou.api.v1;
 
+import com.lin.imissyou.core.LocalUser;
+import com.lin.imissyou.core.UnifyResponse;
+import com.lin.imissyou.core.interceptors.ScopeLevel;
 import com.lin.imissyou.model.Coupon;
 import com.lin.imissyou.services.CouponService;
 import com.lin.imissyou.vo.CouponPureVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,4 +37,15 @@ public class CouponController {
         }
         return CouponPureVO.getList(coupons);
     }
+
+    @ScopeLevel()
+    @PostMapping("/collect/{id}")
+    public void collectCoupon(@PathVariable Long id) {
+        Long uid = LocalUser.getUser().getId();
+        couponService.collectOneCoupon(uid, id);
+        UnifyResponse.createSuccess(0);
+    }
+
+
+
 }

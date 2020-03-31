@@ -6,6 +6,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +24,8 @@ public class Activity extends BaseEntity {
     private String title;
     private String name;
     private String description;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private Date startTime;
+    private Date endTime;
     private String remark;
     private Byte online;
     private String entranceImg;
