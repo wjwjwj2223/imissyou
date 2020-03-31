@@ -1,6 +1,8 @@
 package com.lin.imissyou.core.enumeration;
 
 
+import java.util.stream.Stream;
+
 public enum CouponStatus {
 
     //1
@@ -16,6 +18,13 @@ public enum CouponStatus {
 
     private CouponStatus(Integer value, String description) {
         this.value = value;
+    }
+
+    public static CouponStatus toType(int value) {
+        return Stream.of(CouponStatus.values())
+                .filter(c -> c.value == value)
+                .findAny()
+                .orElse(null);
     }
 
 }

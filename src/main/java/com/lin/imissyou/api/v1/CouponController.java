@@ -2,7 +2,9 @@ package com.lin.imissyou.api.v1;
 
 import com.lin.imissyou.core.LocalUser;
 import com.lin.imissyou.core.UnifyResponse;
+import com.lin.imissyou.core.enumeration.CouponStatus;
 import com.lin.imissyou.core.interceptors.ScopeLevel;
+import com.lin.imissyou.exception.http.ParameterException;
 import com.lin.imissyou.model.Coupon;
 import com.lin.imissyou.services.CouponService;
 import com.lin.imissyou.vo.CouponPureVO;
@@ -44,6 +46,27 @@ public class CouponController {
         Long uid = LocalUser.getUser().getId();
         couponService.collectOneCoupon(uid, id);
         UnifyResponse.createSuccess(0);
+    }
+
+    @ScopeLevel
+    @GetMapping("/myself/by/status/{status}")
+    public List<CouponPureVO> getMyCouponByStatus(@PathVariable Integer status) {
+        Long uid = LocalUser.getUser().getId();
+        List<Coupon> couponList;
+        switch (CouponStatus.toType(status)) {
+            case AVAILABLE:
+                couponList = this.couponService.getMyAvailableCoupons(uid);
+                break;
+            case USED:
+                couponList = this.couponService.getMyUsedCoupons(uid);
+                break;
+            case EXPIRED:
+                couponList = this.couponService.getMyExpiredCoupons(uid);
+                break;
+            default:
+                throw new ParameterException(40001);
+        }
+        return CouponPureVO.getList(couponList);
     }
 
 
