@@ -1,29 +1,20 @@
 package com.lin.imissyou.model;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.lin.imissyou.util.GenericAndJson;
-import com.lin.imissyou.util.ListAndJson;
-import com.lin.imissyou.util.MapAndJson;
-import com.lin.imissyou.util.SuperGenericAndJson;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 
-import javax.persistence.*;
-import java.lang.reflect.Type;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 @Entity
-@Setter
 @Getter
-
-@Where(clause = "delete_time is null")
+@Setter
 public class Sku extends BaseEntity {
-
     @Id
     private Long id;
     private BigDecimal price;
@@ -32,30 +23,11 @@ public class Sku extends BaseEntity {
     private String img;
     private String title;
     private Long spuId;
-    private String code;
 
-    public List<Spec> getSpecs() {
-        if (this.specs == null) {
-            return Collections.emptyList();
-        }
-        return GenericAndJson.jsonToObject(this.specs, new TypeReference<List<Spec>>() {
-        });
-    }
-
-    public void setSpecs(List<Spec> specs) {
-        if (specs == null) {
-            return;
-        }
-        this.specs = GenericAndJson.objectToJson(specs);
-    }
-
-    private Long stock;
     private Integer categoryId;
     private Integer rootCategoryId;
 
-//    @Convert(converter = SuperGenericAndJson.class)
     private String specs;
-
-//    @Convert(converter = MapAndJson.class)
-//    private Map<String, Object> test;
+    private String code;
+    private Long stock;
 }
