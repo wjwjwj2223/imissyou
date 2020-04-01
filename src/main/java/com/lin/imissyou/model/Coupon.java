@@ -7,6 +7,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,8 +21,8 @@ public class Coupon extends BaseEntity{
     private Long id;
     private Long activityId;
     private String title;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private Date startTime;
+    private Date endTime;
     private String description;
     private BigDecimal fullMoney;
     private BigDecimal minus;
