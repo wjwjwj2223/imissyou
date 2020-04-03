@@ -2,6 +2,7 @@ package com.lin.imissyou.util;
 
 import com.lin.imissyou.bo.PageCounter;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class CommonUtil {
@@ -23,5 +24,10 @@ public class CommonUtil {
             return true;
         }
         return false;
+    }
+
+    public static Calendar addSomeSeconods(Calendar calendar, int seconds) {
+        calendar.add(Calendar.SECOND, seconds);
+        return calendar;
     }
 }

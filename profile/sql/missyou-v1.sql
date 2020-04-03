@@ -236,6 +236,8 @@ CREATE TABLE `order` (
   `total_count` int(11) unsigned DEFAULT '0',
   `create_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
   `delete_time` datetime(3) DEFAULT NULL,
+  `expired_time` datetime(3) DEFAULT NULL,
+  `placed_time` datetime(3) DEFAULT NULL,
   `update_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
   `snap_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `snap_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,

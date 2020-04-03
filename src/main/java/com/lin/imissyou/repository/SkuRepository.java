@@ -10,10 +10,22 @@ package com.lin.imissyou.repository;
 
 import com.lin.imissyou.model.Sku;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface SkuRepository extends JpaRepository<Sku, Long> {
 
     List<Sku> findAllByIdIn(List<Long> ids);
+
+    //select stock, version from sku
+    //update sku set s.stock=newValue,version=version+1 where version = 1
+
+    @Modifying
+    @Query("update Sku s \n" +
+            "set s.stock = s.stock - :quantity\n" +
+            "where s.id = :sid\n" +
+            "and s.stock >= :quantity\n")
+    int reduceStock(Long sid, Integer quantity);
 }

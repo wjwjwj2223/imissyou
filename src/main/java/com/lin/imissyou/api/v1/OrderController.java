@@ -3,7 +3,10 @@ package com.lin.imissyou.api.v1;
 import com.lin.imissyou.core.LocalUser;
 import com.lin.imissyou.core.interceptors.ScopeLevel;
 import com.lin.imissyou.dto.OrderDTO;
+import com.lin.imissyou.logic.OrderChecker;
+import com.lin.imissyou.services.OrderService;
 import com.lin.imissyou.vo.OrderIdVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +26,16 @@ public class OrderController {
     //是否拥有这个优惠券
     //优惠券是否过期
 
+    @Autowired
+    OrderService orderService;
+
     @PostMapping("")
     @ScopeLevel()
     public OrderIdVO placeOrder(@RequestBody OrderDTO orderDTO) {
         Long uid = LocalUser.getUser().getId();
-        return null;
+        OrderChecker orderChecker = orderService.isOk(uid, orderDTO);
+        Long oid = this.orderService.placeOrder(uid, orderDTO, orderChecker);
+        return new OrderIdVO(oid);
     }
 
 }
