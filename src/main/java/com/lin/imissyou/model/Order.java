@@ -43,8 +43,8 @@ public class Order extends BaseEntity {
     private BigDecimal finalTotalPrice;
     private Integer status;
 
-    private Date expired_time;
-    private Date placed_time;
+    private Date expiredTime;
+    private Date placedTime;
 
 
     public OrderAddressDTO getSnapAddress() {

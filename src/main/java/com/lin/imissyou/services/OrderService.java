@@ -1,5 +1,6 @@
 package com.lin.imissyou.services;
 
+import com.lin.imissyou.core.LocalUser;
 import com.lin.imissyou.core.enumeration.OrderStatus;
 import com.lin.imissyou.dto.OrderDTO;
 import com.lin.imissyou.dto.SkuInfoDTO;
@@ -18,6 +19,10 @@ import com.lin.imissyou.util.OrderUtil;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +30,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,7 +84,6 @@ public class OrderService {
                     .orElseThrow(() -> new NotFoundException(50006));
             couponChecker = this.checkerObjectFactory.getObject();
             couponChecker.setCoupon(coupon);
-            couponChecker.setUserCoupon(userCoupon);
         }
 
         OrderChecker orderChecker = this.orderCheckerObjectFactory.getObject();
@@ -108,8 +111,8 @@ public class OrderService {
                 .snapImg(orderChecker.getLeaderImg())
                 .snapTitle(orderChecker.getLeaderTitle())
                 .status(OrderStatus.UNPAID.getValue())
-                .expired_time(expired_time)
-                .placed_time(now1.getTime())
+                .expiredTime(expired_time)
+                .placedTime(now1.getTime())
                 .build();
         order.setSnapAddress(orderDTO.getAddress());
         order.setSnapItems(orderChecker.getOrderSkuList());
@@ -122,6 +125,13 @@ public class OrderService {
         }
         //加入到延迟消息队列
         return order.getId();
+    }
+
+    public Page<Order> getUnpaid(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page,size, Sort.by("createTime").descending());
+        Long uid = LocalUser.getUser().getId();
+        Date now = new Date();
+        return this.orderRepository.findByExpiredTimeGreaterThanAndStatusAndUserId(now,OrderStatus.UNPAID.getValue(),uid,pageable);
     }
 
     private void reduceStock(OrderChecker orderChecker) {

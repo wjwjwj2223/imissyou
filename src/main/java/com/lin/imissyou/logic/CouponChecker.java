@@ -6,7 +6,6 @@ import com.lin.imissyou.core.money.IMoneyDiscount;
 import com.lin.imissyou.exception.http.ForbiddenException;
 import com.lin.imissyou.exception.http.ParameterException;
 import com.lin.imissyou.model.Coupon;
-import com.lin.imissyou.model.UserCoupon;
 import com.lin.imissyou.util.CommonUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +24,6 @@ import java.util.stream.Collectors;
 public class CouponChecker {
 
     private Coupon coupon;
-    private UserCoupon userCoupon;
 
     @Autowired
     private IMoneyDiscount iMoneyDiscount;
