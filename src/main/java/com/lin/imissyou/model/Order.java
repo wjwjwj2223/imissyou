@@ -1,7 +1,10 @@
 package com.lin.imissyou.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.lin.imissyou.core.enumeration.OrderStatus;
 import com.lin.imissyou.dto.OrderAddressDTO;
+import com.lin.imissyou.util.CommonUtil;
 import com.lin.imissyou.util.GenericAndJson;
 import lombok.*;
 import org.hibernate.annotations.Where;
@@ -45,6 +48,23 @@ public class Order extends BaseEntity {
 
     private Date expiredTime;
     private Date placedTime;
+
+    @JsonIgnore
+    public OrderStatus getStatusEnum() {
+        return OrderStatus.toType(this.status);
+    }
+
+    //
+    public Boolean needCancel() {
+        if (!this.getStatusEnum().equals(OrderStatus.UNPAID)) {
+            return true;
+        }
+        boolean isOutOfDate = CommonUtil.isOutOfDate(this.getExpiredTime());
+        if (isOutOfDate) {
+            return true;
+        }
+        return false;
+    }
 
 
     public OrderAddressDTO getSnapAddress() {

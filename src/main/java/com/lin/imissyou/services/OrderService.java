@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,6 +133,29 @@ public class OrderService {
         Long uid = LocalUser.getUser().getId();
         Date now = new Date();
         return this.orderRepository.findByExpiredTimeGreaterThanAndStatusAndUserId(now,OrderStatus.UNPAID.getValue(),uid,pageable);
+    }
+
+    public Page<Order> getByStatus(Integer status, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page,size, Sort.by("createTime").descending());
+        Long uid = LocalUser.getUser().getId();
+        if (status == OrderStatus.ALL.getValue()) {
+            return this.orderRepository.findByUserId(uid, pageable);
+        }
+        return this.orderRepository.findByUserIdAndStatus(uid, status,pageable);
+    }
+
+    public Optional<Order> getOrderDetail(Long oid) {
+        Long uid = LocalUser.getUser().getId();
+        return this.orderRepository.findFirstByUserIdAndId(uid, oid);
+    }
+
+    public void updateOrderPrepayId(Long orderId, String prePayId) {
+        Optional<Order> order = this.orderRepository.findById(orderId);
+        order.ifPresent(o -> {
+            o.setPrepayId(prePayId);
+            this.orderRepository.save(o);
+        });
+        order.orElseThrow(() -> new ParameterException(10007));
     }
 
     private void reduceStock(OrderChecker orderChecker) {

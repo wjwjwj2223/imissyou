@@ -4,11 +4,13 @@ import com.lin.imissyou.bo.PageCounter;
 import com.lin.imissyou.core.LocalUser;
 import com.lin.imissyou.core.interceptors.ScopeLevel;
 import com.lin.imissyou.dto.OrderDTO;
+import com.lin.imissyou.exception.http.NotFoundException;
 import com.lin.imissyou.logic.OrderChecker;
 import com.lin.imissyou.model.Order;
 import com.lin.imissyou.services.OrderService;
 import com.lin.imissyou.util.CommonUtil;
 import com.lin.imissyou.vo.OrderIdVO;
+import com.lin.imissyou.vo.OrderPureVO;
 import com.lin.imissyou.vo.OrderSimplifyVO;
 import com.lin.imissyou.vo.PagingDozer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("order")
@@ -47,6 +50,13 @@ public class OrderController {
         return new OrderIdVO(oid);
     }
 
+    @ScopeLevel
+    @GetMapping("/detail/{id}")
+    public OrderPureVO getOrderDetail(@PathVariable(name = "id") Long oid) {
+        Optional<Order> orderOptional = this.orderService.getOrderDetail(oid);
+        return orderOptional.map((o) -> new OrderPureVO(o, payTimeLimit))
+                .orElseThrow(() -> new NotFoundException(50009));
+    }
 
     @ScopeLevel
     @GetMapping("/status/unpaid")
@@ -55,10 +65,24 @@ public class OrderController {
                                          Integer start,
                                  @RequestParam(defaultValue = "10")
                                          Integer count) {
-        PageCounter page = CommonUtil.covertToPageParameter(start, count);
+        PageCounter page = CommonUtil.convertToPageParameter(start, count);
         Page<Order> orderPage = this.orderService.getUnpaid(page.getPage(), page.getCount());
         PagingDozer pagingDozer = new PagingDozer(orderPage, OrderSimplifyVO.class);
         pagingDozer.getItems().forEach((o) -> ((OrderSimplifyVO)o).setPeriod(this.payTimeLimit));
+        return pagingDozer;
+    }
+
+    @ScopeLevel
+    @GetMapping("/by/status/{status}")
+    public PagingDozer getByStatus(@PathVariable int status,
+                                   @RequestParam(name = "start", defaultValue = "0")
+                                           Integer start,
+                                   @RequestParam(name = "count", defaultValue = "10")
+                                           Integer count) {
+        PageCounter page = CommonUtil.convertToPageParameter(start, count);
+        Page<Order> paging = this.orderService.getByStatus(status, page.getPage(), page.getCount());
+        PagingDozer pagingDozer = new PagingDozer<>(paging, OrderSimplifyVO.class);
+        pagingDozer.getItems().forEach(o -> ((OrderSimplifyVO) o).setPeriod(this.payTimeLimit));
         return pagingDozer;
     }
 
