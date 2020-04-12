@@ -9,6 +9,7 @@ public class PasswordValidator implements ConstraintValidator<PasswordEqual, Per
 
     private int min;
     private int max;
+
     @Override
     public void initialize(PasswordEqual constraintAnnotation) {
         this.min = constraintAnnotation.min();

@@ -79,7 +79,5 @@ public class WxPaymentNotifyService {
         if (res != 1) {
             throw new ServerErrorException(9999);
         }
-
-
     }
 }

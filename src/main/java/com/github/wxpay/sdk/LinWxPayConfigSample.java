@@ -38,7 +38,18 @@ public class LinWxPayConfigSample extends WXPayConfig {
     }
     @Override
     public IWXPayDomain getWXPayDomain(){
-        return null;
+        IWXPayDomain  iwxPayDomain = new IWXPayDomain() {
+            @Override
+            public void report(String domain, long elapsedTimeMillis, Exception ex) {
+
+            }
+
+            @Override
+            public DomainInfo getDomain(WXPayConfig config) {
+                return new IWXPayDomain.DomainInfo(WXPayConstants.DOMAIN_API,true);
+            }
+        };
+        return iwxPayDomain;
     }
 
 }

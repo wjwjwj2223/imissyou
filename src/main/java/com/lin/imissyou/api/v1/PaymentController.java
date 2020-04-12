@@ -47,7 +47,11 @@ public class PaymentController {
         }
         String xml;
         xml = LinWxNotify.readNotify(s);
-        wxPaymentNotifyService.processPayNotify(xml);
+        try {
+            this.wxPaymentNotifyService.processPayNotify(xml);
+        } catch (Exception e) {
+            return LinWxNotify.fail();
+        }
         return LinWxNotify.success();
     }
 }
