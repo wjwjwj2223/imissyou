@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,6 +58,9 @@ public class OrderService {
 
     @Autowired
     private SkuRepository skuRepository;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Value("${missyou.order.pay-time-limmit}")
     private int payTimeLimit;
@@ -120,12 +125,29 @@ public class OrderService {
         this.orderRepository.save(order);
         //减库存
         this.reduceStock(orderChecker);
+
+        Long couponId = -1L;
         //核销优惠券
         if (orderDTO.getCouponId() != null) {
             this.writeOffCoupon(orderDTO.getCouponId(), order.getId(), uid);
+            couponId = orderDTO.getCouponId();
         }
         //加入到延迟消息队列
+        this.sendToRedis(order.getId(), uid, couponId);
         return order.getId();
+    }
+
+    private void sendToRedis(Long oid, Long uid, Long couponId) {
+//        key
+//        value
+//        key
+        String key = uid.toString() + "," + oid.toString() + "," + couponId.toString();
+
+        try {
+            stringRedisTemplate.opsForValue().set(key, "1", this.payTimeLimit, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Page<Order> getUnpaid(Integer page, Integer size) {
