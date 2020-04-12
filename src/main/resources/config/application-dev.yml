@@ -24,6 +24,6 @@ missyou:
     token-expired-in: 86400000
   order:
     max-sku-limit: 777
-    pay-time-limmit: 3600
+    pay-time-limmit: 60
     pay-callback-host: http://talelin.com
     pay-callback-path: /v1/payment/wx/notify

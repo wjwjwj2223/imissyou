@@ -36,7 +36,12 @@ public class OrderCancelService {
         if (messageBO.getOrderId()<=0){
             throw new ServerErrorException(9999);
         }
-        this.cancel(messageBO.getOrderId());
+        try {
+            this.cancel(messageBO.getOrderId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void cancel(Long oid) {
@@ -47,7 +52,7 @@ public class OrderCancelService {
             return;
         }
         order.getSnapItems().forEach(i->{
-            skuRepository.recoverStock(i.getId(), i.getCount().longValue());
+            skuRepository.recoverStock(i.getId(), i.getCount());
         });
     }
 }

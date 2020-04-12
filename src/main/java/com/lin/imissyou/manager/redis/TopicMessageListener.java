@@ -23,12 +23,6 @@ import org.springframework.stereotype.Component;
 public class TopicMessageListener implements MessageListener {
 
     @Autowired
-    private OrderCancelService orderCancelService;
-
-    @Autowired
-    private CouponBackService couponBackService;
-
-    @Autowired
     private  ApplicationEventPublisher topicMessageListener;
 
     @Override
@@ -41,7 +35,5 @@ public class TopicMessageListener implements MessageListener {
 
         OrderMessageBO messageBO = new OrderMessageBO(expiredKey);
         this.topicMessageListener.publishEvent(messageBO);
-//        orderCancelService.cancel(messageBO);
-//        couponBackService.returnBack(messageBO);
     }
 }

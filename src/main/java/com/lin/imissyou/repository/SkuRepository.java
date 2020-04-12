@@ -33,5 +33,5 @@ public interface SkuRepository extends JpaRepository<Sku, Long> {
     @Modifying
     @Query("update Sku s set s.stock=s.stock+(:quantity) where s.id = :sid")
     int recoverStock(@Param("sid") Long sid,
-                     @Param("quantity") Long quantity);
+                     @Param("quantity") Integer quantity);
 }
