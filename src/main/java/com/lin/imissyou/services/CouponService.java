@@ -38,6 +38,10 @@ public class CouponService {
         return couponRepository.findByWholeStore(true, now);
     }
 
+    public List<UserCoupon> getCollectedCoupons(Long uid) {
+        return userCouponRepository.findByUserId(uid);
+    }
+
     public void collectOneCoupon(Long uid, Long couponId) {
         this.couponRepository.findById(couponId).orElseThrow(() -> new NotFoundException(40004));
         Activity activity = this.activityRepository.findByCouponListId(couponId).orElseThrow(() -> new NotFoundException(40010));

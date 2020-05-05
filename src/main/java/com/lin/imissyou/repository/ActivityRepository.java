@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * @author wangjie
+ */
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
 

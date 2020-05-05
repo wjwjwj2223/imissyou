@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserCouponRepository extends JpaRepository<UserCoupon, Long> {
@@ -12,6 +13,8 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon, Long> {
     Optional<UserCoupon> findFirstByUserIdAndCouponIdAndStatus(Long uid, Long couponId, int status);
 
     Optional<UserCoupon> findFirstByUserIdAndCouponId(Long uid, Long couponId);
+
+    List<UserCoupon> findByUserId(Long uid);
 
     @Modifying
     @Query("update UserCoupon uc \n" +

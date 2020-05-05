@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author wangjie
+ */
 @RequestMapping(value = "token")
 @RestController
 public class TokenController {
