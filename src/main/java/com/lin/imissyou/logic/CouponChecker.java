@@ -7,9 +7,13 @@ import com.lin.imissyou.exception.http.ForbiddenException;
 import com.lin.imissyou.exception.http.ParameterException;
 import com.lin.imissyou.model.Coupon;
 import com.lin.imissyou.util.CommonUtil;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -17,9 +21,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 //@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CouponChecker {
 
@@ -79,11 +84,15 @@ public class CouponChecker {
         switch (CouponType.toType(this.coupon.getType())) {
             case FULL_OFF:
             case FULL_MINUS:
-               int compare = this.coupon.getFullMoney().compareTo(orderCategoryPrice);
-               if (compare > 0) {
-                   throw new ParameterException(40008);
-               }
-               break;
+                //无门槛
+                if (this.coupon.getFullMoney() == null) {
+                    break;
+                }
+                int compare = this.coupon.getFullMoney().compareTo(orderCategoryPrice);
+                if (compare > 0) {
+                    throw new ParameterException(40008);
+                }
+                 break;
             case NO_THRESHOLD_MINUS:
                 break;
             default:

@@ -4,29 +4,39 @@ import com.lin.imissyou.bo.SkuOrderBO;
 import com.lin.imissyou.dto.OrderDTO;
 import com.lin.imissyou.dto.SkuInfoDTO;
 import com.lin.imissyou.exception.http.ParameterException;
+import com.lin.imissyou.logic.CouponChecker;
 import com.lin.imissyou.model.OrderSku;
 import com.lin.imissyou.model.Sku;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+/**
+ * @author wangjie
+ */
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+//@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class OrderChecker {
 
-    @Setter
     private OrderDTO orderDTO;
-    @Setter
+
     private List<Sku> serverSkuList;
-    @Setter
+
     private CouponChecker couponChecker;
-    @Getter
+
     private List<OrderSku> orderSkuList = new ArrayList<>();
 
     @Value("${missyou.order.max-sku-limit}")

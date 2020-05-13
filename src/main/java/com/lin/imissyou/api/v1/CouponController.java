@@ -17,6 +17,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author wangjie
+ */
 @RequestMapping("coupon")
 @RestController
 public class CouponController {

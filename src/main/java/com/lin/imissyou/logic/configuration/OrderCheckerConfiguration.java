@@ -1,17 +1,16 @@
 package com.lin.imissyou.logic.configuration;
 
-import com.lin.imissyou.logic.CouponChecker;
+import com.lin.imissyou.logic.OrderChecker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
-public class CouponCheckerConfiguration {
-
+public class OrderCheckerConfiguration {
 
     @Bean
     @Scope("prototype")
-    CouponChecker getCouponChecker() {
-        return new CouponChecker();
+    OrderChecker getChecker() {
+        return new OrderChecker();
     }
 }
