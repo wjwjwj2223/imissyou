@@ -86,6 +86,7 @@ public class CouponController {
         }
         return coupons.stream().map(coupon -> {
             CouponCategoryVO vo = new CouponCategoryVO(coupon);
+            vo.setIsCollected(true);
             return vo;
         }).collect(Collectors.toList());
     }
