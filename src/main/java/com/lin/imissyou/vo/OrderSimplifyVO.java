@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author wangjie
+ */
 @Getter
 @Setter
 public class OrderSimplifyVO {
@@ -21,4 +24,5 @@ public class OrderSimplifyVO {
     private Long period;
     private Date expiredTime;
     private Date placedTime;
+    private Date createTime;
 }
